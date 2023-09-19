@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { UserStatus } from "@prisma/client";
 import { prisma } from "../config";
 import { io } from "../socket";
 import { LikeAction } from "../types/enums";
@@ -670,6 +669,41 @@ const Reviews = {
         return response.status(500).send({ message: error.message });
       } else {
         return response.status(500).send({ message: "unknown error" });
+      }
+    }
+  },
+
+  getSimilarReviews: async (request: Request, response: Response) => {
+    try {
+      const { reviewId } = request.params;
+
+      const review = await prisma.review.findUnique({
+        where: {
+          id: parseInt(reviewId),
+        },
+      });
+
+      const similarReviews = await prisma.review.findMany({
+        where: {
+          workName: review?.workName,
+          NOT: {
+            id: parseInt(reviewId),
+          },
+        },
+        include: {
+          user: true,
+        },
+        orderBy: {
+          id: "desc",
+        },
+      });
+
+      response.json(similarReviews);
+    } catch (error) {
+      if (error instanceof Error) {
+        return response.status(500).send({ message: error.message });
+      } else {
+        return response.status(500).send({ message: "Unknown error" });
       }
     }
   },
