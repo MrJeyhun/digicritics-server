@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "lib": ["es6"],
+    "allowJs": true,
+    "outDir": "dist",
+    "rootDir": "src",
+    "strict": true,
+    "esModuleInterop": true,
+    // add "jest" for testing
+    "types": ["node"],
+    "skipLibCheck": true
+  },
+  "lib": ["es2015"],
+  "include": ["./src/**/*"],
+  "exclude": ["src/**/*.spec.ts"]
+}
