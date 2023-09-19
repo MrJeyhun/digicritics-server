@@ -4,13 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "rimraf ./dist && tsc",
+    "build": "rimraf ./build && tsc",
     "start:dev": "npx nodemon",
     "start": "npm run build && node build/index.js",
     "ts.check": "tsc --project tsconfig.json",
-    "add-build": "git add dist",
-    "dev": "tsc && node dist/index.js",
-    "postinstall": "tsc"
+    "add-build": "git add build",
+    "dev": "tsc && node build/index.js",
+    "postinstall": "tsc, rimraf"
   },
   "keywords": [],
   "author": "",
