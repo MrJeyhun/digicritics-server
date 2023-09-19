@@ -6,7 +6,7 @@
   "scripts": {
     "build": "rimraf ./dist && tsc",
     "start:dev": "npx nodemon",
-    "start": "node index.js",
+    "start": "npm run build && node build/index.js",
     "ts.check": "tsc --project tsconfig.json",
     "add-build": "git add dist",
     "dev": "tsc && node dist/index.js",
