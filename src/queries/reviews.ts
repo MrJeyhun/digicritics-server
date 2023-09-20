@@ -691,6 +691,11 @@ const Reviews = {
           },
         },
         include: {
+          tags: true,
+          likes: true,
+          ratings: true,
+          comments: true,
+          category: true,
           user: true,
         },
         orderBy: {
