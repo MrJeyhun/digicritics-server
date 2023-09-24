@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { prisma } from "../config";
 import { io } from "../socket";
 import { LikeAction } from "../types/enums";
+import { Tag } from "../types/types";
 
 // TODO: refactor this
 const Reviews = {
@@ -62,7 +63,7 @@ const Reviews = {
           },
           tags: {
             connect: existingTagIds.map((id) => ({ id })),
-            create: tagAssociations.filter((tag: any) => !("id" in tag)),
+            create: tagAssociations.filter((tag: Tag) => !("id" in tag)),
           },
         },
       });
@@ -624,29 +625,31 @@ const Reviews = {
           .send({ message: "Search query is required." });
       }
 
+      const formattedSearchQuery = searchQuery.trim().replace(" ", " & ");
+
       const reviews = await prisma.review.findMany({
         where: {
           OR: [
             {
               reviewTitle: {
-                search: searchQuery,
+                search: formattedSearchQuery,
               },
             },
             {
               workName: {
-                search: searchQuery,
+                search: formattedSearchQuery,
               },
             },
             {
               reviewContent: {
-                search: searchQuery,
+                search: formattedSearchQuery,
               },
             },
             {
               comments: {
                 some: {
                   content: {
-                    contains: searchQuery,
+                    contains: formattedSearchQuery,
                   },
                 },
               },
