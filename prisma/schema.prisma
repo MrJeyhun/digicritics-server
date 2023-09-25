@@ -46,7 +46,7 @@ model Review {
 
   category Category? @relation(fields: [categoryId], references: [id])
   userId   Int
-  user     Users     @relation(fields: [userId], references: [id])
+  user     Users     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdTime DateTime @default(now())
 }
